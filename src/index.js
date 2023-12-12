@@ -11,6 +11,9 @@ app.use(express.urlencoded({extended: false}));
 app.use(passport.initialize())
 
 //Routes
+app.get('/', (req, res) => {
+    res.send("Hello World!")
+})
 app.use('/auth', router)
 
 app.listen(4000)
