@@ -54,10 +54,17 @@ router.get('/microsoft/callback', passport.authenticate("auth-microsoft", {
     failureRedirect: '/auth/microsoft',
     session: false
 }), (req, res) => {
-    res.status(200).json({
-        user: req.user
-    })
-})
+    const userString = JSON.stringify(req.user)
+    res.send(`<!DOCTYPE html>
+    <html lang="en">
+      <body>
+      </body>
+      <script>
+        window.opener.postMessage(${userString}, 'http://localhost:5173/')
+      </script>
+    </html>`)
+
+});
 
 export {
     router
