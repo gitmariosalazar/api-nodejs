@@ -60,7 +60,7 @@ router.get('/microsoft/callback', passport.authenticate("auth-microsoft", {
       <body>
       </body>
       <script>
-        window.opener.postMessage(${userString}, 'http://localhost:5173/')
+        window.opener.postMessage(${userString}, 'https://front-end-marioutn.onrender.com/')
       </script>
     </html>`)
 
