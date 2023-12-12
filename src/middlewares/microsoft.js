@@ -6,7 +6,7 @@ config()
 passport.use("auth-microsoft", new MicrosoftStrategy({
     clientID: process.env.MICROSOFT_CLIENT_ID,
     clientSecret: process.env.MICROSOFT_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/microsoft/callback",
+    callbackURL: "https://api-marioutn-salazar.onrender.com/auth/microsoft/callback",
     scope: ["user.read", "calendars.read", "mail.send", "mail.read", "offline_access"],
     authorizationURL: "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
     tokenURL: "https://login.microsoftonline.com/common/oauth2/v2.0/token"
