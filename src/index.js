@@ -12,7 +12,7 @@ app.use(passport.initialize())
 
 //Routes
 app.get('/', (req, res) => {
-    res.send("Hello World!")
+    res.send("Hello World! Mario Salazar")
 })
 app.use('/auth', router)
 
