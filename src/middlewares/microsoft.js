@@ -12,5 +12,5 @@ passport.use("auth-microsoft", new MicrosoftStrategy({
     tokenURL: "https://login.microsoftonline.com/common/oauth2/v2.0/token"
 }, function (accessToken, refreshToken, profile, done) {
     console.log(accessToken)
-    done(null, {profile, accessToken})
+    done(null, {profile, accessToken, refreshToken})
 }))
