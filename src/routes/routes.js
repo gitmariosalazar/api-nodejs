@@ -59,7 +59,11 @@ router.get('/microsoft/callback', passport.authenticate("auth-microsoft", {
   session: false
 }), (req, res) => {
   //res.status(200).json({user: req.user, accessToken: "Token"})
-  res.status(200).json({user: req.user})
+  try {
+    res.status(200).json(req.user)
+  } catch (error) {
+    res.json({error: error})
+  }
 });
 
 export {
