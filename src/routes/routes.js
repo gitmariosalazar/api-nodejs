@@ -2,16 +2,18 @@ import {Router} from 'express';
 const router = Router();
 import passport from 'passport';
 
-import {getUsers, createUser, getUserById, updateUser, deleteUser} from '../controllers/users.controllers.js'
+import {getUsers, createUser, getUserById, updateUser, deleteUser, updateUserPassword} from '../controllers/users.controllers.js'
 import {getModules, createModule, getModuleById, updateModule, deleteModule} from '../controllers/modules.controllers.js';
 import {getRoles, createRol, getRolById, updateRol, deleteRol} from '../controllers/rol.controllers.js';
 import {getAssigments, createAssigment, getAssigmentById, updateAssigment, deleteAssigment} from '../controllers/assigment.controllers.js';
 import {getFunctions, createFunctions, getFunctionById, updateFunctions, deleteFunction} from '../controllers/functions.controllers.js';
 import {getAssigmentsFunctions, createAssigmentFunctions, getAssigmentFunctionsById, updateAssigmentFunctions, deleteAssigmentFunctions} from '../controllers/assigfunctions.controllers.js';
+import {Login} from '../controllers/login.controllers.js';
 
 router.get('/users', getUsers);
 router.post('/users', createUser);
 router.put('/users/:id', updateUser);
+router.put('/users_psw/:id', updateUserPassword);
 router.get('/users/:id', getUserById);
 router.delete('/users/:id', deleteUser);
 
@@ -45,27 +47,21 @@ router.put('/assigfunctions/:id', updateAssigmentFunctions);
 router.get('/assigfunctions/:id', getAssigmentFunctionsById);
 router.delete('/assigfunctions/:id', deleteAssigmentFunctions);
 
+router.get('/login', Login);
+
 router.get('/microsoft', passport.authenticate("auth-microsoft", {
-    prompt: "select_account",
-    session: false
+  prompt: "select_account",
+  session: false
 }))
 
 router.get('/microsoft/callback', passport.authenticate("auth-microsoft", {
-    failureRedirect: '/auth/microsoft',
-    session: false
+  failureRedirect: '/auth/microsoft',
+  session: false
 }), (req, res) => {
-    const userString = JSON.stringify(req.user)
-    res.send(`<!DOCTYPE html>
-    <html lang="en">
-      <body>
-      </body>
-      <script>
-        window.opener.postMessage(${userString}, 'https://front-end-marioutn.onrender.com/')
-      </script>
-    </html>`)
-
+  //res.status(200).json({user: req.user, accessToken: "Token"})
+  res.status(200).json({user: req.user})
 });
 
 export {
-    router
+  router
 }   

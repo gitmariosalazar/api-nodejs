@@ -94,7 +94,7 @@ const updateUser = async (req, res) => {
     const {first_name, last_name, email, username, state, phone} = req.body
     getConnection.query("update users set first_name = $1, last_name = $2, email = $3, username = $4, state = $5, phone = $6 where username = $7 or email = $7;", [first_name, last_name, email, username, state, phone, id], (error, data) => {
       if (error) {
-        throw Error("Error to uodate user!")
+        throw Error("Error to update user!")
       }
       else {
         res.status(201).json({
@@ -103,6 +103,33 @@ const updateUser = async (req, res) => {
         })
       }
     })
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      message: "Failed to update user!"
+    })
+  }
+}
+
+const updateUserPassword = async (req, res) => {
+  try {
+    const {id} = req.params
+    const {password, confirm_password} = req.body
+    console.log(id, password, confirm_password)
+    if (password === confirm_password) {
+      let psw = Encrypt(password)
+      getConnection.query("update users set password = $1 where username = $2 or email = $2;", [psw, id], (error, data) => {
+        if (error) {
+          throw Error("Error to update user!")
+        }
+        else {
+          res.status(201).json({
+            error: null,
+            message: "Updated User password successfully!"
+          })
+        }
+      })
+    }
   } catch (error) {
     res.status(500).json({
       error: error.message,
@@ -146,7 +173,8 @@ export {
   createUser,
   getUserById,
   updateUser,
-  deleteUser
+  deleteUser,
+  updateUserPassword
 }
 
 

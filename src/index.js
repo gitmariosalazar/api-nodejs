@@ -2,8 +2,10 @@ import express from 'express';
 import passport from 'passport';
 import './middlewares/microsoft.js';
 import {router} from './routes/routes.js'
+import cors from 'cors'
 
 const app = express();
+app.use(cors());
 
 //Middlewares
 app.use(express.json());
@@ -16,5 +18,5 @@ app.get('/', (req, res) => {
 })
 app.use('/auth', router)
 
-app.listen(4000)
+app.listen(3000)
 console.log('Hello, server on port 3000')
